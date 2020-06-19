@@ -7,9 +7,10 @@ control 'core-plans-findutils-works' do
   impact 1.0
   title 'Ensure findutils works as expected'
   desc '
-  Verify findutils by ensuring 
-  (1) its installation directory exists and 
-  (2) that it returns the expected version.
+  Verify findutils by ensuring that
+  (1) its installation directory exists 
+  (2) it returns the expected version
+  (3) it performs a successfull search
   '
   
   plan_installation_directory = command("hab pkg path #{plan_origin}/#{plan_name}")
@@ -20,7 +21,7 @@ control 'core-plans-findutils-works' do
   end
   
   command_relative_path = input('command_relative_path', value: 'bin/find')
-  command_full_path = File.join(plan_installation_directory.stdout.strip, "#{command_relative_path}")
+  command_full_path = File.join(plan_installation_directory.stdout.strip, command_relative_path)
   plan_pkg_version = plan_installation_directory.stdout.split("/")[5]
   describe command("#{command_full_path} --version") do
     its('exit_status') { should eq 0 }
@@ -29,10 +30,21 @@ control 'core-plans-findutils-works' do
     its('stderr') { should be_empty }
   end
 
-  describe command("#{command_full_path} /hab/svc/findutils/config/fixtures -name 'dummyfile.txt'") do
+  expected = <<~EOF
+    /hab/svc/findutils
+    /hab/svc/findutils/files
+    /hab/svc/findutils/var
+    /hab/svc/findutils/hooks
+    /hab/svc/findutils/static
+    /hab/svc/findutils/config
+    /hab/svc/findutils/data
+    /hab/svc/findutils/config_install
+    /hab/svc/findutils/logs
+  EOF
+  describe command("#{command_full_path} /hab/svc/findutils -maxdepth 1 -type d") do
     its('exit_status') { should eq 0 }
     its('stdout') { should_not be_empty }
-    its('stdout') { should match /\/hab\/svc\/findutils\/config\/fixtures\/path\/to\/a\/dummyfile.txt/ }
+    its('stdout') { should match /#{expected}/ }
     its('stderr') { should be_empty }
   end 
 end
