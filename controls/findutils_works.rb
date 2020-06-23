@@ -29,22 +29,4 @@ control 'core-plans-findutils-works' do
     its('stdout') { should match /find \(GNU findutils\) #{plan_pkg_version}/ }
     its('stderr') { should be_empty }
   end
-
-  expected = <<~EOF
-    /hab/svc/findutils
-    /hab/svc/findutils/files
-    /hab/svc/findutils/var
-    /hab/svc/findutils/hooks
-    /hab/svc/findutils/static
-    /hab/svc/findutils/config
-    /hab/svc/findutils/data
-    /hab/svc/findutils/config_install
-    /hab/svc/findutils/logs
-  EOF
-  describe command("#{command_full_path} /hab/svc/findutils -maxdepth 1 -type d") do
-    its('exit_status') { should eq 0 }
-    its('stdout') { should_not be_empty }
-    its('stdout') { should match /#{expected}/ }
-    its('stderr') { should be_empty }
-  end 
 end
