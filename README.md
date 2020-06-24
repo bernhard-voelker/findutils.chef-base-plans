@@ -1,6 +1,8 @@
-[![Build Status](https://dev.azure.com/chefcorp-partnerengineering/Chef%20Base%20Plans/_apis/build/status/chef-base-plans.findutils?branchName=master)](https://dev.azure.com/chefcorp-partnerengineering/Chef%20Base%20Plans/_build/latest?definitionId=69&branchName=master)
+[![Build Status](https://dev.azure.com/chefcorp-partnerengineering/Chef%20Base%20Plans/_apis/build/status/chef-base-plans.findutils?branchName=master)](https://dev.azure.com/chefcorp-partnerengineering/Chef%20Base%20Plans/_build/latest?definitionId=126&branchName=master)
 
 # findutils
+
+Findutils supplies the basic file directory searching utilities of the GNU system.  See [documentation](https://www.gnu.org/software/findutils/)
 
 ## Maintainers
 
@@ -38,6 +40,23 @@ will add the following binaries to the PATH:
 * /bin/find
 * /bin/xargs
 * /bin/updatedb
+
+```bash
+$ hab pkg install core/findutils --binlink
+» Installing core/findutils
+☁ Determining latest version of core/findutils in the 'stable' channel
+→ Found newer installed version (core/findutils/4.6.0/20200619072624) than remote version (core/findutils/4.6.0/20200306000932)
+→ Using core/findutils/4.6.0/20200619072624
+★ Install of core/findutils/4.6.0/20200619072624 complete with 0 new packages installed.
+» Binlinking locate from core/findutils/4.6.0/20200619072624 into /bin
+★ Binlinked locate from core/findutils/4.6.0/20200619072624 to /bin/locate
+» Binlinking find from core/findutils/4.6.0/20200619072624 into /bin
+★ Binlinked find from core/findutils/4.6.0/20200619072624 to /bin/find
+» Binlinking xargs from core/findutils/4.6.0/20200619072624 into /bin
+★ Binlinked xargs from core/findutils/4.6.0/20200619072624 to /bin/xargs
+» Binlinking updatedb from core/findutils/4.6.0/20200619072624 into /bin
+★ Binlinked updatedb from core/findutils/4.6.0/20200619072624 to /bin/updatedb
+```
 
 #### Using an example binary
 

@@ -29,4 +29,11 @@ control 'core-plans-findutils-works' do
     its('stdout') { should match /find \(GNU findutils\) #{plan_pkg_version}/ }
     its('stderr') { should be_empty }
   end
+
+  describe command("#{command_full_path} /hab/svc/findutils -type f -name 'run'") do
+      its('exit_status') { should eq 0 }
+      its('stdout') { should_not be_empty }
+      its('stdout') { should match /\/hab\/svc\/findutils\/hooks\/run/ }
+      its('stderr') { should be_empty }
+    end 
 end
