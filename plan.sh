@@ -47,7 +47,7 @@ do_prepare() {
 
 do_build() {
 
-  automake
+  automake --add-missing
   ./configure \
     --prefix="$pkg_prefix" \
     --localstatedir="$pkg_svc_var_path/locate"
