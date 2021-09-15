@@ -1,6 +1,6 @@
 pkg_name=findutils
 pkg_origin=core
-pkg_version=4.6.0
+pkg_version=4.8.0
 pkg_maintainer="The Habitat Maintainers <humans@habitat.sh>"
 pkg_description="\
 The GNU Find Utilities are the basic directory searching utilities of the GNU \
@@ -10,8 +10,8 @@ capabilities to other commands.\
 "
 pkg_upstream_url="http://www.gnu.org/software/findutils"
 pkg_license=('GPL-3.0-or-later')
-pkg_source="http://ftp.gnu.org/gnu/$pkg_name/${pkg_name}-${pkg_version}.tar.gz"
-pkg_shasum="ded4c9f73731cd48fec3b6bdaccce896473b6d8e337e9612e16cf1431bb1169d"
+pkg_source="http://ftp.gnu.org/gnu/$pkg_name/${pkg_name}-${pkg_version}.tar.xz"
+pkg_shasum="57127b7e97d91282c6ace556378d5455a9509898297e46e10443016ea1387164"
 pkg_deps=(
   core/glibc
 )
@@ -35,9 +35,7 @@ do_prepare() {
   # the latest glibc.
   # Thanks to Arch Linux for pulling these together
   # https://git.archlinux.org/svntogit/packages.git/tree/trunk?h=packages/findutils
-  patch -p1 < "$PLAN_CONTEXT"/correct-glibc-fflush.patch
-  patch -p1 < "$PLAN_CONTEXT"/correct-glibc-makedev.patch
-  
+    
   # The Makefiles were generated with aclocal-1.14, and the above patches
   # force it to want to regenerate. The following four lines can be removed
   # if findutils releases a new version that no longer requries the patches
@@ -49,7 +47,7 @@ do_prepare() {
 
 do_build() {
 
-  automake
+  automake --add-missing
   ./configure \
     --prefix="$pkg_prefix" \
     --localstatedir="$pkg_svc_var_path/locate"
